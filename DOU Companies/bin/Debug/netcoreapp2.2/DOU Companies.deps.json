@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "9b35014f509dd9b7f432076a2c9d19570c72e61c"
+    "signature": "0f3173fa3b46984512ea11898a980c0d5829c736"
   },
   "compilationOptions": {},
   "targets": {
@@ -9,7 +9,8 @@
       "DOU Companies/1.0.0": {
         "dependencies": {
           "FSharp.Core": "4.5.2",
-          "FSharp.Data": "3.1.1"
+          "FSharp.Data": "3.1.1",
+          "XPlot.GoogleCharts": "2.0.0"
         },
         "runtime": {
           "DOU Companies.dll": {}
@@ -77,6 +78,35 @@
             "fileVersion": "3.1.1.0"
           }
         }
+      },
+      "Google.DataTable.Net.Wrapper/4.0.0-rc1": {
+        "runtime": {
+          "lib/netcoreapp2.1/Google.DataTable.Net.Wrapper.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.0.0"
+          }
+        }
+      },
+      "Newtonsoft.Json/12.0.1": {
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "12.0.0.0",
+            "fileVersion": "12.0.1.22727"
+          }
+        }
+      },
+      "XPlot.GoogleCharts/2.0.0": {
+        "dependencies": {
+          "FSharp.Core": "4.5.2",
+          "Google.DataTable.Net.Wrapper": "4.0.0-rc1",
+          "Newtonsoft.Json": "12.0.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/XPlot.GoogleCharts.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        }
       }
     }
   },
@@ -99,6 +129,27 @@
       "sha512": "sha512-jpqpskdcNYa+px1YaxCY5QQcnnVR9HArf2ocuHluhHg/zAjNP+G768y0BfgDePatPK35G+ZHChnB9M67J3kynw==",
       "path": "fsharp.data/3.1.1",
       "hashPath": "fsharp.data.3.1.1.nupkg.sha512"
+    },
+    "Google.DataTable.Net.Wrapper/4.0.0-rc1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZQj/o/vO1Rnweumo5EIdC0ETvwxyLZIaxQlZtt7rWaahxlYs+0n8IMD+DhE9I+TyHpv380jqXgkku+XcmHMArg==",
+      "path": "google.datatable.net.wrapper/4.0.0-rc1",
+      "hashPath": "google.datatable.net.wrapper.4.0.0-rc1.nupkg.sha512"
+    },
+    "Newtonsoft.Json/12.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pBR3wCgYWZGiaZDYP+HHYnalVnPJlpP1q55qvVb+adrDHmFMDc1NAKio61xTwftK3Pw5h7TZJPJEEVMd6ty8rg==",
+      "path": "newtonsoft.json/12.0.1",
+      "hashPath": "newtonsoft.json.12.0.1.nupkg.sha512"
+    },
+    "XPlot.GoogleCharts/2.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ioH/p5caXClrosyIT7EKFu1rvkvxgGTgKkuPwu6BgEeXowUDUuNNsLgr8iQ008IGkoq17ZX1pxTswxcmXcB/7A==",
+      "path": "xplot.googlecharts/2.0.0",
+      "hashPath": "xplot.googlecharts.2.0.0.nupkg.sha512"
     }
   }
 }
