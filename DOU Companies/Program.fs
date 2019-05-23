@@ -1,25 +1,27 @@
-﻿open System
+﻿open DOU_Companies
+open ProcessHtmlFiles
+open System
+open XPlot.GoogleCharts
 
-open FSharp.Data
-
-let url = 
-  "https://en.wikipedia.org/wiki/" +
-    "2017_FIA_Formula_One_World_Championship"
+let data =
+    [
+        "ул. Амосова, 12", "China: 1,363,800,000"
+        "ул. Отакара Яроша, 18Д", "India: 1,242,620,000"
+        "ул. Шевченко 111a, 9 этаж, БЦ Legenda Class", "US: 317,842,000"
+        "ул. Барикадная, 15а , этажи 8-12", "Indonesia: 247,424,598"
+        "ул. Леха Качинского, 7. 6й этаж БЦ Риальто", "Brazil: 201,032,714"
+    ]
     
-type F1_2017 = HtmlProvider<"../data/2017_F1.htm">
+let options =
+  Options
+   (  displayMode = "markers", region="UA",
+      colorAxis = ColorAxis(colors = [|"green"; "blue"|]) ) 
+data
+|> Chart.Geo
+|> Chart.WithLabels ["Population"; "Area"]
+|> Chart.WithOptions options
+|> Chart.WithApiKey "AIzaSyDJ-Xr91-wOnT2hDfQ3SYdRjbo2ui9RrYI"
+|> Chart.Show
 
-// Download the latest market depth information
-let f1Calendar = 
-  F1_2017.Load(url).Tables.``Season calendar``
-
-// Look at the most recent row. Note the 'Date' property
-// is of type 'DateTime' and 'Open' has a type 'decimal'
-let firstRow = f1Calendar.Rows |> Seq.head
-let round = firstRow.Round
-let grandPrix = firstRow.``Grand Prix``
-let date = firstRow.Date
-
-// Print the bid / offer volumes for each row
-for row in f1Calendar.Rows do
-  printfn "Race, round %A is hosted at %A on %A" 
-    row.Round row.``Grand Prix`` row.Date
+GetAllCompaniesLocations
+Console.ReadKey ()

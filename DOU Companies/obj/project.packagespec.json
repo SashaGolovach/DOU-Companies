@@ -37,6 +37,10 @@
           "target": "Package",
           "version": "[2.2.0, )",
           "autoReferenced": true
+        },
+        "XPlot.GoogleCharts": {
+          "target": "Package",
+          "version": "[2.0.0, )"
         }
       },
       "imports": [

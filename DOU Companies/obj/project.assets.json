@@ -67,6 +67,15 @@
           "lib/netstandard2.0/FSharp.Data.dll": {}
         }
       },
+      "Google.DataTable.Net.Wrapper/4.0.0-rc1": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp2.1/Google.DataTable.Net.Wrapper.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.1/Google.DataTable.Net.Wrapper.dll": {}
+        }
+      },
       "Microsoft.NETCore.App/2.2.0": {
         "type": "package",
         "dependencies": {
@@ -272,6 +281,29 @@
         "build": {
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
+      },
+      "Newtonsoft.Json/12.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
+      "XPlot.GoogleCharts/2.0.0": {
+        "type": "package",
+        "dependencies": {
+          "FSharp.Core": "0.0.0",
+          "Google.DataTable.Net.Wrapper": "4.0.0-rc1",
+          "Newtonsoft.Json": "12.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/XPlot.GoogleCharts.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/XPlot.GoogleCharts.dll": {}
+        }
       }
     }
   },
@@ -350,6 +382,25 @@
         "typeproviders/fsharp41/net45/FSharp.Data.DesignTime.pdb",
         "typeproviders/fsharp41/netstandard2.0/FSharp.Data.DesignTime.dll",
         "typeproviders/fsharp41/netstandard2.0/FSharp.Data.DesignTime.pdb"
+      ]
+    },
+    "Google.DataTable.Net.Wrapper/4.0.0-rc1": {
+      "sha512": "ZQj/o/vO1Rnweumo5EIdC0ETvwxyLZIaxQlZtt7rWaahxlYs+0n8IMD+DhE9I+TyHpv380jqXgkku+XcmHMArg==",
+      "type": "package",
+      "path": "google.datatable.net.wrapper/4.0.0-rc1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "google.datatable.net.wrapper.4.0.0-rc1.nupkg.sha512",
+        "google.datatable.net.wrapper.nuspec",
+        "lib/net40/Google.DataTable.Net.Wrapper.dll",
+        "lib/net45/Google.DataTable.Net.Wrapper.dll",
+        "lib/net452/Google.DataTable.Net.Wrapper.dll",
+        "lib/net46/Google.DataTable.Net.Wrapper.dll",
+        "lib/net461/Google.DataTable.Net.Wrapper.dll",
+        "lib/netcoreapp2.0/Google.DataTable.Net.Wrapper.dll",
+        "lib/netcoreapp2.1/Google.DataTable.Net.Wrapper.dll",
+        "lib/netstandard2.0/Google.DataTable.Net.Wrapper.dll"
       ]
     },
     "Microsoft.NETCore.App/2.2.0": {
@@ -819,13 +870,68 @@
         "netstandard.library.2.0.3.nupkg.sha512",
         "netstandard.library.nuspec"
       ]
+    },
+    "Newtonsoft.Json/12.0.1": {
+      "sha512": "pBR3wCgYWZGiaZDYP+HHYnalVnPJlpP1q55qvVb+adrDHmFMDc1NAKio61xTwftK3Pw5h7TZJPJEEVMd6ty8rg==",
+      "type": "package",
+      "path": "newtonsoft.json/12.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.pdb",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.pdb",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.pdb",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.pdb",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.pdb",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.pdb",
+        "lib/netstandard1.3/Newtonsoft.Json.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.pdb",
+        "lib/netstandard2.0/Newtonsoft.Json.xml",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.pdb",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.pdb",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "newtonsoft.json.12.0.1.nupkg.sha512",
+        "newtonsoft.json.nuspec"
+      ]
+    },
+    "XPlot.GoogleCharts/2.0.0": {
+      "sha512": "ioH/p5caXClrosyIT7EKFu1rvkvxgGTgKkuPwu6BgEeXowUDUuNNsLgr8iQ008IGkoq17ZX1pxTswxcmXcB/7A==",
+      "type": "package",
+      "path": "xplot.googlecharts/2.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net472/XPlot.GoogleCharts.dll",
+        "lib/net472/XPlot.GoogleCharts.xml",
+        "lib/netstandard2.0/XPlot.GoogleCharts.dll",
+        "lib/netstandard2.0/XPlot.GoogleCharts.xml",
+        "xplot.googlecharts.2.0.0.nupkg.sha512",
+        "xplot.googlecharts.nuspec"
+      ]
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
       "FSharp.Core >= 4.5.2",
       "FSharp.Data >= 3.1.1",
-      "Microsoft.NETCore.App >= 2.2.0"
+      "Microsoft.NETCore.App >= 2.2.0",
+      "XPlot.GoogleCharts >= 2.0.0"
     ]
   },
   "packageFolders": {
@@ -875,6 +981,10 @@
             "target": "Package",
             "version": "[2.2.0, )",
             "autoReferenced": true
+          },
+          "XPlot.GoogleCharts": {
+            "target": "Package",
+            "version": "[2.0.0, )"
           }
         },
         "imports": [

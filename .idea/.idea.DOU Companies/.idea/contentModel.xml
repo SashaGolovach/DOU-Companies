@@ -3,9 +3,11 @@
   <component name="ContentModelStore">
     <e p="$PROJECT_DIR$" t="IncludeFlat">
       <e p="DOU Companies" t="IncludeRecursive">
+        <e p="App_Data" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="DOU Companies.fsproj" t="IncludeRecursive" />
         <e p="obj" t="ExcludeRecursive" />
+        <e p="ProcessHtmlFiles.fs" t="Include" />
         <e p="Program.fs" t="Include" />
       </e>
       <e p="DOU Companies.sln" t="IncludeFlat" />
