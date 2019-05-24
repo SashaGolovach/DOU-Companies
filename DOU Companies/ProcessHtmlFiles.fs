@@ -1,11 +1,13 @@
 namespace DOU_Companies
 
+open System.Collections.Generic
 open System.IO
+open Newtonsoft.Json
 open FSharp.Data
 
 module ProcessHtmlFiles =
-    let GetCompaniesLinks () =
-        let companiesResult = HtmlDocument.Load "../../../App_Data/companies.html"
+    let GetCompaniesLinks (companiesHtmlFile: string, linkFileName: string) =
+        let companiesResult = HtmlDocument.Load companiesHtmlFile
         let links = 
             companiesResult.Descendants ["a"]
             |> Seq.filter (fun a -> 
@@ -16,18 +18,27 @@ module ProcessHtmlFiles =
                 x.TryGetAttribute("href")
                 |> Option.map (fun a -> a.Value())
             )
-        File.WriteAllLines("App_Data/links.txt", links)
+        File.WriteAllLines(linkFileName, links)
         
-    let GetAllCompaniesLocations =
-        let companiesResult = HtmlDocument.Load "../../../App_Data/a.html"
+    let GetCompanieLocations (doc: HtmlDocument) =
         let linkElements = 
-            companiesResult.Descendants ["div"]
+            doc.Descendants ["div"]
             |> Seq.filter (fun div -> 
                 div.TryGetAttribute("class")
                 |> Option.map (fun cls ->
                     cls.Value()) = Some "address")
             |> Seq.toArray
         let links = [|for div in linkElements -> div.InnerText()|] 
-        File.WriteAllLines("App_Data/adresses.txt", links)
+        links
         
-
+    let GetAllCompaniesLocationInfo (links: seq<string>) =
+        let addresses = new Dictionary<string, string[]>()
+        for l in links do
+            let doc = HtmlDocument.Load (l + "offices/")
+            let splittedUrl = l.Split '/'
+            let name = splittedUrl.[splittedUrl.Length - 2]
+            addresses.Add(name, GetCompanieLocations (doc))
+            printfn "%s" l
+            
+        let addressesSerialized = JsonConvert.SerializeObject(addresses)
+        File.WriteAllText("App_Data/addresses.json", addressesSerialized)
