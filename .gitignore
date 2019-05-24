@@ -1,5 +1,5 @@
 # Don't track content of these folders
-App_Data/
+.idea/
 
 
 # Compiled source #
