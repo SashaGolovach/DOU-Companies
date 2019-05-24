@@ -34,11 +34,14 @@ module ProcessHtmlFiles =
     let GetAllCompaniesLocationInfo (links: seq<string>) =
         let addresses = new Dictionary<string, string[]>()
         for l in links do
-            let doc = HtmlDocument.Load (l + "offices/")
-            let splittedUrl = l.Split '/'
-            let name = splittedUrl.[splittedUrl.Length - 2]
-            addresses.Add(name, GetCompanieLocations (doc))
-            printfn "%s" l
+            try
+                let doc = HtmlDocument.Load (l + "offices/")
+                let splittedUrl = l.Split '/'
+                let name = splittedUrl.[splittedUrl.Length - 2]
+                addresses.TryAdd(name, GetCompanieLocations (doc))
+                printfn "%s" l
+            with
+            | _ -> ()
             
         let addressesSerialized = JsonConvert.SerializeObject(addresses)
-        File.WriteAllText("App_Data/addresses.json", addressesSerialized)
+        File.WriteAllText("addresses.json", addressesSerialized)

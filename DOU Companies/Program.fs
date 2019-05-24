@@ -23,7 +23,6 @@ open System.IO
 //|> Chart.Show
 
 
-let links = File.ReadAllLines "App_Data/links.txt"
+let links = File.ReadAllLines "../../../App_Data/links.txt"
 GetAllCompaniesLocationInfo links
-
 Console.ReadKey ()
