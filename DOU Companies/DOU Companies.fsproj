@@ -8,6 +8,7 @@
 
     <ItemGroup>
         <Compile Include="ProcessHtmlFiles.fs" />
+        <Compile Include="AddressParser.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
 
