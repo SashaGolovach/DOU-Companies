@@ -1,0 +1,40 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml"><head>
+	<title>Ошибка 404</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+
+	<link rel="shortcut icon" href="//s.dou.ua/assets/img/favicon.ico" />
+	<link rel="stylesheet" href="//s.dou.ua/assets/css/dou/error.css" />
+</head>
+
+<body class="page-error">
+	<div class="content-wrap">
+		<div class="logo">
+			<a href="//dou.ua/"></a>
+		</div>
+
+		<div class="content">
+			<h2>Ошибка 404</h2>
+			<h1>Такой страницы нет</h1>
+
+			<div class="message-menu">
+				<div class="dark">Стоит посмотреть:</div>
+				<ul>
+					<li><a href="//dou.ua/forums/">Cвежее на форуме</a></li>
+					<li><a href="//dou.ua/lenta/">Ленту</a></li>
+					<li><a href="//jobs.dou.ua/">Вакансии</a></li>
+				</ul>
+			</div>
+
+			<div class="footer" style="min-width:300px;"><span class="dark" style="margin-right: 2em;">© 2005—2019 DOU</span> <a href="mailto:support@dou.ua">support@dou.ua</a></div>
+		</div>
+	</div>
+
+	<script>
+		window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};
+		ga('create', 'UA-168613-2', 'auto');
+		ga('set', 'transport', 'beacon');
+		ga('send', 'pageview');
+	</script>
+	<script async="" src="https://www.google-analytics.com/analytics.js"></script>
+
+</body></html>
