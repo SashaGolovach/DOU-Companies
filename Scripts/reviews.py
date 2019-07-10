@@ -2,7 +2,7 @@ from selenium import webdriver
 from os import listdir
 import time
 
-driver = webdriver.Chrome('chromedriver.exe')
+driver = webdriver.Chrome()
 
 linksFile = open('links.txt', 'r')
 links = linksFile.read().split()
