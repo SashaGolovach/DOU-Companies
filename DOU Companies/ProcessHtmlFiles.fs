@@ -58,8 +58,15 @@ module ProcessHtmlFiles =
         reviews 
 
     let ProcessReviews = 
+        let companyReviews = new Dictionary<string, string[]>()
         let dirInfo = new DirectoryInfo(Directory.GetCurrentDirectory() + "../../../../App_Data/Reviews")
         let files = dirInfo.GetFiles ()
         for f in files do
-            let reviews = GetReviewsFromFile (f.FullName)
-            File.WriteAllLines("../../../App_Data/CompanyReviews/" + f.Name + ".txt", reviews)
+            try
+                let reviews = GetReviewsFromFile (f.FullName)
+                let result = companyReviews.TryAdd(f.Name, Seq.toArray reviews)
+                printfn "%s" f.Name
+            with
+            | _ -> ()
+        let reviewsSerialized = JsonConvert.SerializeObject(companyReviews)
+        File.WriteAllText("../../../App_Data/CompanyReviews/reviews.json", reviewsSerialized)
