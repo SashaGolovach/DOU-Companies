@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Compile Include="ProcessReviews.fs" />
         <Compile Include="ProcessHtmlFiles.fs" />
         <Compile Include="AddressParser.fs" />
         <Compile Include="Program.fs" />

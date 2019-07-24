@@ -45,3 +45,21 @@ module ProcessHtmlFiles =
             
         let addressesSerialized = JsonConvert.SerializeObject(addresses)
         File.WriteAllText("addresses.json", addressesSerialized)
+
+    let GetHtmlReviewsNodes (document : HtmlDocument) = 
+        document.Descendants ["div"]
+        |> Seq.filter (fun div -> 
+            div.TryGetAttribute("class").IsSome && div.TryGetAttribute("class").Value.Value() = "l-text b-typo")
+
+    let GetReviewsFromFile (fileName:string) = 
+        let document = HtmlDocument.Load fileName
+        let reviewsNodes = GetHtmlReviewsNodes document
+        let reviews = seq { for r in reviewsNodes -> HtmlNodeExtensions.InnerText(r)}
+        reviews 
+
+    let ProcessReviews = 
+        let dirInfo = new DirectoryInfo(Directory.GetCurrentDirectory() + "../../../../App_Data/Reviews")
+        let files = dirInfo.GetFiles ()
+        for f in files do
+            let reviews = GetReviewsFromFile (f.FullName)
+            File.WriteAllLines("../../../App_Data/CompanyReviews/" + f.Name + ".txt", reviews)
