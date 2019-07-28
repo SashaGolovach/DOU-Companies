@@ -6,6 +6,7 @@ open System.Collections.Generic
 open XPlot.GoogleCharts
 open System.IO
 open Newtonsoft.Json
+open ProcessReviews
 
 //let temp = 
 //    [|
@@ -38,6 +39,19 @@ open Newtonsoft.Json
 //|> Chart.WithApiKey "AIzaSyDJ-Xr91-wOnT2hDfQ3SYdRjbo2ui9RrYI"
 //|> Chart.Show
 
-ProcessReviews
+let reviewsSerializedText = File.ReadAllText("../../../App_Data/CompanyReviews/reviews.json")
+let companyReviews = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(reviewsSerializedText)
+for kvp in companyReviews do
+    let reviews = kvp.Value
+    for i = 0 to reviews.Length - 1 do
+        let formattedString = String.Format("{0} id: {1}", kvp.Key, i)
+        printfn "%s" formattedString
+        if String.IsNullOrEmpty(reviews.[i]) then
+            ()
+        else
+            reviews.[i] <- TranslateText reviews.[i]
+
+let translatedReviewsSerialized = JsonConvert.SerializeObject companyReviews
+File.WriteAllText("../../../App_Data/CompanyReviews/translatedReviews.json", translatedReviewsSerialized)
 
 Console.ReadKey ()

@@ -57,7 +57,7 @@ module ProcessHtmlFiles =
         let reviews = seq { for r in reviewsNodes -> HtmlNodeExtensions.InnerText(r)}
         reviews 
 
-    let ProcessReviews = 
+    let ProcessReviewsFiles = 
         let companyReviews = new Dictionary<string, string[]>()
         let dirInfo = new DirectoryInfo(Directory.GetCurrentDirectory() + "../../../../App_Data/Reviews")
         let files = dirInfo.GetFiles ()
