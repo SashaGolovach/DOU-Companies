@@ -14,6 +14,8 @@ namespace ReviewsTranslator.Implementations
     {
         public async Task<string> Translate(string text)
         {
+            if (string.IsNullOrEmpty(text))
+                return "";
             try
             {
                 using (HttpClient client = new HttpClient())

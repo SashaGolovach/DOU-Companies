@@ -7,6 +7,8 @@ open XPlot.GoogleCharts
 open System.IO
 open Newtonsoft.Json
 open ProcessReviews
+open FSharp.Data
+open System.Threading
 
 //let temp = 
 //    [|
@@ -39,19 +41,32 @@ open ProcessReviews
 //|> Chart.WithApiKey "AIzaSyDJ-Xr91-wOnT2hDfQ3SYdRjbo2ui9RrYI"
 //|> Chart.Show
 
-let reviewsSerializedText = File.ReadAllText("../../../App_Data/CompanyReviews/reviews.json")
+let GetTranslatedString text = 
+    Http.RequestString("http://localhost:9999", body = FormValues ["text", text])
+
+let originalReviews = File.ReadAllText("../../../App_Data/CompanyReviews/reviews.json")
+let reviewsSerializedText = File.ReadAllText("../../../App_Data/CompanyReviews/translatedReviews.json")
+
 let companyReviews = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(reviewsSerializedText)
+let originalCompanyReviews = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(originalReviews)
+
+let mutable ableToTranslate = true
+
 for kvp in companyReviews do
     let reviews = kvp.Value
     for i = 0 to reviews.Length - 1 do
-        let formattedString = String.Format("{0} id: {1}", kvp.Key, i)
+        let formattedString = String.Format("{0} id: {1} done", kvp.Key, i)
         printfn "%s" formattedString
-        if String.IsNullOrEmpty(reviews.[i]) then
-            ()
-        else
-            reviews.[i] <- TranslateText reviews.[i]
+        if ableToTranslate then
+            if String.IsNullOrEmpty(reviews.[i]) then
+                let translatedString = GetTranslatedString originalCompanyReviews.[kvp.Key].[i]
+                if translatedString = "Exit" then
+                    ableToTranslate <- false
+                else 
+                    reviews.[i] <- translatedString
+            Thread.Sleep 1500
 
 let translatedReviewsSerialized = JsonConvert.SerializeObject companyReviews
-File.WriteAllText("../../../App_Data/CompanyReviews/translatedReviews.json", translatedReviewsSerialized)
+File.WriteAllText("../../../App_Data/CompanyReviews/translatedReviews1.json", translatedReviewsSerialized)
 
 Console.ReadKey ()
