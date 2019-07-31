@@ -39,5 +39,37 @@ namespace ReviewsTranslator.Implementations
                 return null;
             }
         }
+
+        public async Task<string> Analyse(string text)
+        {
+            try
+            {
+                var url = "https://www.repustate.com/sentiment-analysis-api-demo/";
+
+                var body = new Dictionary<string, string>
+                {
+                    { "csrfmiddlewaretoken", "QenD1hL4EsAOx5dOynK4vLOTyKQ55Wg9rnLxTmB5lRofE8LOGMfXFkA9OO18S7Tj" },
+                    { "language", "ru" },
+                    {"text",  text}
+                };
+
+                using (HttpClient client = new HttpClient())
+                {
+                    var content = new FormUrlEncodedContent(body);
+                    var request = new HttpRequestMessage(HttpMethod.Post, url) { Content = content};
+                    request.Headers.Add("Referer", url);
+                    request.Headers.Add("Cookie", "__stripe_mid=04bbffd8-9b9a-4c06-a3b4-80e8f481417e; csrftoken=60JfEsSf3HdLbgqVq1yL4Voe9d6PEMCTH979wxIgK61cijYVyq3EeuauphhSrXf3; sessionid=ki45aofxwcic9814hdiltw4c2vli1nri");
+                    HttpResponseMessage response = await client.SendAsync(request);
+
+                    string responseString = await response.Content.ReadAsStringAsync();
+
+                    return responseString;
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                return null;
+            }
+        }
     }
 }

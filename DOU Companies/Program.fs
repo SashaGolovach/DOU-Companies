@@ -9,6 +9,9 @@ open Newtonsoft.Json
 open ProcessReviews
 open FSharp.Data
 open System.Threading
+open System.Text
+open System.Net
+
 
 //let temp = 
 //    [|
@@ -44,29 +47,38 @@ open System.Threading
 let GetTranslatedString text = 
     Http.RequestString("http://localhost:9999", body = FormValues ["text", text])
 
-let originalReviews = File.ReadAllText("../../../App_Data/CompanyReviews/reviews.json")
+let GetAnalysedResult =
+    let document = HtmlDocument.Load "index.html"
+    let result = document.Descendants ["strong"]
+    let resultList = Seq.toList result
+    let innerText = HtmlNodeExtensions.InnerText(resultList.[resultList.Length - 1])
+    let formattedResult = innerText.Replace(".", ",")
+    Decimal.Parse(formattedResult)
+
 let reviewsSerializedText = File.ReadAllText("../../../App_Data/CompanyReviews/translatedReviews.json")
-
 let companyReviews = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(reviewsSerializedText)
-let originalCompanyReviews = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(originalReviews)
 
-let mutable ableToTranslate = true
+let analysedReviews = new Dictionary<string, List<decimal>>()
 
 for kvp in companyReviews do
     let reviews = kvp.Value
+    analysedReviews.[kvp.Key] <- new List<decimal>()
     for i = 0 to reviews.Length - 1 do
-        let formattedString = String.Format("{0} id: {1} done", kvp.Key, i)
-        printfn "%s" formattedString
-        if ableToTranslate then
-            if String.IsNullOrEmpty(reviews.[i]) then
-                let translatedString = GetTranslatedString originalCompanyReviews.[kvp.Key].[i]
-                if translatedString = "Exit" then
-                    ableToTranslate <- false
-                else 
-                    reviews.[i] <- translatedString
-            Thread.Sleep 1500
+        try
+            let formattedString = String.Format("{0} id: {1}", kvp.Key, i)
+            printfn "%s" formattedString
 
-let translatedReviewsSerialized = JsonConvert.SerializeObject companyReviews
-File.WriteAllText("../../../App_Data/CompanyReviews/translatedReviews1.json", translatedReviewsSerialized)
+            let analysedStringHtml = translator.Analyse reviews.[i]
+            analysedStringHtml.Wait()
+            File.WriteAllText("index.html", analysedStringHtml.Result)
+
+            let result = GetAnalysedResult 
+            analysedReviews.[kvp.Key].Add(result)
+        with | _ ->
+            let analysedReviewsSerialized = JsonConvert.SerializeObject analysedReviews
+            File.WriteAllText("../../../App_Data/CompanyReviews/analysedReviews.json", analysedReviewsSerialized)
+
+let analysedReviewsSerialized = JsonConvert.SerializeObject analysedReviews
+File.WriteAllText("../../../App_Data/CompanyReviews/analysedReviews.json", analysedReviewsSerialized)
 
 Console.ReadKey ()

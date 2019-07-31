@@ -8,5 +8,6 @@ namespace ReviewsTranslator.Interfaces
     public interface IGoogleTranslator
     {
         Task<string> Translate(string text);
+        Task<string> Analyse(string text);
     }
 }
