@@ -45,8 +45,10 @@ let GetTranslatedString text =
     Http.RequestString("http://localhost:9999", body = FormValues ["text", text])
 
 let originalReviews = File.ReadAllText("../../../App_Data/CompanyReviews/reviews.json")
+let reviews = File.ReadAllText("../../../App_Data/CompanyReviews/translatedReviews4.json")
 
-let companyReviews = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(originalReviews)
+let origCompanyReviews = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(originalReviews)
+let companyReviews = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(reviews)
 
 let mutable ableToTranslate = true
 let mutable count = 0
@@ -59,17 +61,24 @@ for kvp in companyReviews do
         printfn "%s" formattedString
 
         if ableToTranslate then
-            try
-                let translatedString = GetTranslatedString reviews.[i]
-                if translatedString = "Exit" then
-                    ableToTranslate <- false
-                else 
-                    reviews.[i] <- translatedString
-            with | _ ->
-                let translatedReviewsSerialized = JsonConvert.SerializeObject companyReviews
-                File.WriteAllText("../../../App_Data/CompanyReviews/translatedReviews3.json", translatedReviewsSerialized)
+            if String.IsNullOrEmpty(reviews.[i]) then
+                reviews.[i] <- origCompanyReviews.[kvp.Key].[i]
+
+            if translator.IsNotTranslated(reviews.[i]) then
+                try
+                    let translatedString = GetTranslatedString reviews.[i]
+
+                    Thread.Sleep 100
+
+                    if translatedString = "Exit" then
+                        ableToTranslate <- false
+                    else 
+                        reviews.[i] <- translatedString
+                with | _ ->
+                    let translatedReviewsSerialized = JsonConvert.SerializeObject companyReviews
+                    File.WriteAllText("../../../App_Data/CompanyReviews/translatedReviews5.json", translatedReviewsSerialized)
 
 let translatedReviewsSerialized = JsonConvert.SerializeObject companyReviews
-File.WriteAllText("../../../App_Data/CompanyReviews/translatedReviews3.json", translatedReviewsSerialized)
+File.WriteAllText("../../../App_Data/CompanyReviews/translatedReviews5.json", translatedReviewsSerialized)
 
 Console.ReadKey ()

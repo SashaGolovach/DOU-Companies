@@ -7,6 +7,7 @@ namespace ReviewsTranslator.Interfaces
 {
     public interface IGoogleTranslator
     {
+        bool IsNotTranslated(string text);
         Task<string> Translate(string text);
     }
 }

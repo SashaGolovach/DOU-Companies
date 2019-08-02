@@ -3,6 +3,7 @@ using ReviewsTranslator.Interfaces;
 using ReviewsTranslator.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,15 @@ namespace ReviewsTranslator.Implementations
 {
     public class GoogleTranslator : IGoogleTranslator
     {
+        public bool IsNotTranslated(string text)
+        {
+            var l = text.ToCharArray().ToList();
+            if (l.Any(c => (int)c > 1000 && (int)c < 2000))
+                return true;
+            else
+                return false;
+        }
+
         public async Task<string> Translate(string text)
         {
             if (string.IsNullOrEmpty(text))
