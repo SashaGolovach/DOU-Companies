@@ -45,28 +45,31 @@ let GetTranslatedString text =
     Http.RequestString("http://localhost:9999", body = FormValues ["text", text])
 
 let originalReviews = File.ReadAllText("../../../App_Data/CompanyReviews/reviews.json")
-let reviewsSerializedText = File.ReadAllText("../../../App_Data/CompanyReviews/translatedReviews.json")
 
-let companyReviews = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(reviewsSerializedText)
-let originalCompanyReviews = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(originalReviews)
+let companyReviews = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(originalReviews)
 
 let mutable ableToTranslate = true
+let mutable count = 0
 
 for kvp in companyReviews do
     let reviews = kvp.Value
     for i = 0 to reviews.Length - 1 do
-        let formattedString = String.Format("{0} id: {1} done", kvp.Key, i)
+        count <- count + 1
+        let formattedString = String.Format("{0} id: {1} count= {2}", kvp.Key, i, count)
         printfn "%s" formattedString
+
         if ableToTranslate then
-            if String.IsNullOrEmpty(reviews.[i]) then
-                let translatedString = GetTranslatedString originalCompanyReviews.[kvp.Key].[i]
+            try
+                let translatedString = GetTranslatedString reviews.[i]
                 if translatedString = "Exit" then
                     ableToTranslate <- false
                 else 
                     reviews.[i] <- translatedString
-            Thread.Sleep 1500
+            with | _ ->
+                let translatedReviewsSerialized = JsonConvert.SerializeObject companyReviews
+                File.WriteAllText("../../../App_Data/CompanyReviews/translatedReviews3.json", translatedReviewsSerialized)
 
 let translatedReviewsSerialized = JsonConvert.SerializeObject companyReviews
-File.WriteAllText("../../../App_Data/CompanyReviews/translatedReviews1.json", translatedReviewsSerialized)
+File.WriteAllText("../../../App_Data/CompanyReviews/translatedReviews3.json", translatedReviewsSerialized)
 
 Console.ReadKey ()
