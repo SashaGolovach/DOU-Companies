@@ -27,6 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\GoogleNLP\GoogleNLP.csproj" />
       <ProjectReference Include="..\ReviewsTranslator\ReviewsTranslator.csproj" />
     </ItemGroup>
 

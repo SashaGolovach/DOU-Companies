@@ -9,6 +9,7 @@ open Newtonsoft.Json
 open ProcessReviews
 open FSharp.Data
 open System.Threading
+open GoogleNLP.Implementations
 
 //let temp = 
 //    [|
@@ -41,44 +42,34 @@ open System.Threading
 //|> Chart.WithApiKey "AIzaSyDJ-Xr91-wOnT2hDfQ3SYdRjbo2ui9RrYI"
 //|> Chart.Show
 
-let GetTranslatedString text = 
-    Http.RequestString("http://localhost:9999", body = FormValues ["text", text])
 
-let originalReviews = File.ReadAllText("../../../App_Data/CompanyReviews/reviews.json")
-let reviews = File.ReadAllText("../../../App_Data/CompanyReviews/translatedReviews4.json")
+let service = new NLPService()
 
-let origCompanyReviews = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(originalReviews)
-let companyReviews = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(reviews)
+let reviewsSerializedText = File.ReadAllText("../../../App_Data/CompanyReviews/translatedReviews5.json")
+let companyReviews = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(reviewsSerializedText)
 
-let mutable ableToTranslate = true
-let mutable count = 0
+let rSerializedText = File.ReadAllText("../../../App_Data/CompanyReviews/analysedReviews4.json")
+let analysedReviews = JsonConvert.DeserializeObject<Dictionary<string, decimal[]>>(rSerializedText)
 
 for kvp in companyReviews do
     let reviews = kvp.Value
+
     for i = 0 to reviews.Length - 1 do
-        count <- count + 1
-        let formattedString = String.Format("{0} id: {1} count= {2}", kvp.Key, i, count)
-        printfn "%s" formattedString
+        if analysedReviews.[kvp.Key].[i] = -10m then
+            try
+                //let score = service.Analyse(reviews.[i]).Result
+                analysedReviews.[kvp.Key].[i] <- 0m//(score)
 
-        if ableToTranslate then
-            if String.IsNullOrEmpty(reviews.[i]) then
-                reviews.[i] <- origCompanyReviews.[kvp.Key].[i]
+                let formattedString = String.Format("{0} id: {1} score= {2} done", kvp.Key, i, 0m)
+                printfn "%s" formattedString
 
-            if translator.IsNotTranslated(reviews.[i]) then
-                try
-                    let translatedString = GetTranslatedString reviews.[i]
+            with | _ ->
+                let analysedReviewsSerialized = JsonConvert.SerializeObject analysedReviews
+                File.WriteAllText("../../../App_Data/CompanyReviews/analysedReviews5.json", analysedReviewsSerialized)
+        else
+            Console.WriteLine(kvp.Key + " " + i.ToString())
 
-                    Thread.Sleep 100
-
-                    if translatedString = "Exit" then
-                        ableToTranslate <- false
-                    else 
-                        reviews.[i] <- translatedString
-                with | _ ->
-                    let translatedReviewsSerialized = JsonConvert.SerializeObject companyReviews
-                    File.WriteAllText("../../../App_Data/CompanyReviews/translatedReviews5.json", translatedReviewsSerialized)
-
-let translatedReviewsSerialized = JsonConvert.SerializeObject companyReviews
-File.WriteAllText("../../../App_Data/CompanyReviews/translatedReviews5.json", translatedReviewsSerialized)
+let analysedReviewsSerialized = JsonConvert.SerializeObject analysedReviews
+File.WriteAllText("../../../App_Data/CompanyReviews/analysedReviews5.json", analysedReviewsSerialized)
 
 Console.ReadKey ()
