@@ -4,6 +4,7 @@ open System.Collections.Generic
 open System.IO
 open Newtonsoft.Json
 open FSharp.Data
+open System.Linq
 
 module ProcessHtmlFiles =
     let GetCompaniesLinks (companiesHtmlFile: string, linkFileName: string) =
@@ -70,3 +71,14 @@ module ProcessHtmlFiles =
             | _ -> ()
         let reviewsSerialized = JsonConvert.SerializeObject(companyReviews)
         File.WriteAllText("../../../App_Data/CompanyReviews/reviews.json", reviewsSerialized)
+
+    let GetCompanyScore (fileName:string) = 
+        let document = HtmlDocument.Load fileName
+        let scoreNodes = document.Descendants ["h3"] |> 
+            Seq.filter (fun h3 -> 
+                h3.TryGetAttribute("class").IsSome && h3.TryGetAttribute("class").Value.Value() = "g-h3")
+        let scoreList = Seq.toList scoreNodes
+        if scoreList.Length > 0 then 
+            HtmlNodeExtensions.InnerText(scoreList.FirstOrDefault())
+        else 
+            ""
