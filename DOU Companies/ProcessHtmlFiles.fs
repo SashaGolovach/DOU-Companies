@@ -72,11 +72,13 @@ module ProcessHtmlFiles =
         let reviewsSerialized = JsonConvert.SerializeObject(companyReviews)
         File.WriteAllText("../../../App_Data/CompanyReviews/reviews.json", reviewsSerialized)
 
-    let GetCompanyScores (fileName:string) = 
+    let GetCompanyScore (fileName:string) = 
         let document = HtmlDocument.Load fileName
         let scoreNodes = document.Descendants ["h3"] |> 
             Seq.filter (fun h3 -> 
                 h3.TryGetAttribute("class").IsSome && h3.TryGetAttribute("class").Value.Value() = "g-h3")
         let scoreList = Seq.toList scoreNodes
-
-        scoreList.FirstOrDefault()
+        if scoreList.Length > 0 then 
+            HtmlNodeExtensions.InnerText(scoreList.FirstOrDefault())
+        else 
+            ""
