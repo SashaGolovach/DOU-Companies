@@ -10,6 +10,7 @@ open ProcessReviews
 open FSharp.Data
 open System.Threading
 open GoogleNLP.Implementations
+open System.Linq
 
 //let temp = 
 //    [|
@@ -42,34 +43,18 @@ open GoogleNLP.Implementations
 //|> Chart.WithApiKey "AIzaSyDJ-Xr91-wOnT2hDfQ3SYdRjbo2ui9RrYI"
 //|> Chart.Show
 
-
-let service = new NLPService()
-
-let reviewsSerializedText = File.ReadAllText("../../../App_Data/CompanyReviews/translatedReviews5.json")
-let companyReviews = JsonConvert.DeserializeObject<Dictionary<string, string[]>>(reviewsSerializedText)
-
-let rSerializedText = File.ReadAllText("../../../App_Data/CompanyReviews/analysedReviews4.json")
+let rSerializedText = File.ReadAllText("../../../App_Data/CompanyReviews/analysedReviews.json")
 let analysedReviews = JsonConvert.DeserializeObject<Dictionary<string, decimal[]>>(rSerializedText)
 
-for kvp in companyReviews do
-    let reviews = kvp.Value
+let res = new List<KeyValuePair<string, decimal>>()
+for kvp in analysedReviews do
+    if kvp.Value.Length > 50 then
+        res.Add(KeyValuePair.Create(kvp.Key, Array.average(kvp.Value)))
 
-    for i = 0 to reviews.Length - 1 do
-        if analysedReviews.[kvp.Key].[i] = -10m then
-            try
-                //let score = service.Analyse(reviews.[i]).Result
-                analysedReviews.[kvp.Key].[i] <- 0m//(score)
+let l = res.OrderByDescending(fun kvp -> kvp.Value).ToList()
+let takenSeq = Seq.take 50 l
 
-                let formattedString = String.Format("{0} id: {1} score= {2} done", kvp.Key, i, 0m)
-                printfn "%s" formattedString
-
-            with | _ ->
-                let analysedReviewsSerialized = JsonConvert.SerializeObject analysedReviews
-                File.WriteAllText("../../../App_Data/CompanyReviews/analysedReviews5.json", analysedReviewsSerialized)
-        else
-            Console.WriteLine(kvp.Key + " " + i.ToString())
-
-let analysedReviewsSerialized = JsonConvert.SerializeObject analysedReviews
-File.WriteAllText("../../../App_Data/CompanyReviews/analysedReviews5.json", analysedReviewsSerialized)
+for el in takenSeq do
+    Console.WriteLine(el.Key + " " + el.Value.ToString())
 
 Console.ReadKey ()
