@@ -65,20 +65,27 @@ open MySql.Data
 let sales = ["GlobalLogic", 1204; "SoftServe", 456; "EPAM Systems", 292; "Miratech", 199]
 let expenses = ["GlobalLogic", 1420; "SoftServe", 338; "EPAM Systems", 273; "Miratech", 179]
 // mr - 0.025693161030904202 gl - -0.011468710260296843 ss - 0.04299559551845038 ep - 0.020500595995510292
+
+let data =
+    [
+        "GlobalLogic", -0.011468710260296843, 85, "Count", 3915
+        "SoftServe", 0.04299559551845038, 88, "Count", 1135
+        "EPAM Systems", 0.020500595995510292, 85, "Count", 839
+        "Miratech", 0.025693161030904202, 78, "Count", 541
+     ]
+
 let options =
     Options(
-        title = "",
-        hAxis =
-            Axis(
-                title = "Company",
-                titleTextStyle = TextStyle(color = "red")
-            )
+        title = "Correlation between sentiment analysis score, company rate and count of reviews on DOU (2019)",
+        vAxis = Axis(title = "Company rate (defined by employees)"),
+        hAxis = Axis(title = "Sentiment analysis score)"),
+        bubble = Bubble(textStyle = TextStyle(fontSize = 11))
     )
- 
-[sales; expenses]
-|> Chart.Column
+
+data
+|> Chart.Bubble
 |> Chart.WithOptions options
-|> Chart.WithLabels ["Positive"; "Negative"]
+|> Chart.WithLabels ["Company rate (defined by employees)"; "Sentiment analysis score)"; "Region"; "Population"]
 |> Chart.Show
 
 Console.ReadKey ()
