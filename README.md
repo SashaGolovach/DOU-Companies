@@ -4,7 +4,7 @@
 
 # Inctroduction
 
-DOU Companies is an open source project for analysing market of IT in Ukraine. ..... __18508 items__
+DOU Companies is an open source project for analysing market of IT in Ukraine. ..... __18567 items__
 ![Chart1](/docs/reviews_pie.jpg)
 
 > Subtitle or Short Description Goes Here
