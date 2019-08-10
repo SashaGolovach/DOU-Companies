@@ -18,7 +18,10 @@
       <PackageReference Include="Google.Apis" Version="1.40.2" />
       <PackageReference Include="Google.Apis.Drive.v3" Version="1.40.2.1649" />
       <PackageReference Include="Google.Cloud.Translation.V2" Version="1.1.0" />
+      <PackageReference Include="MySql.Data" Version="8.0.17" />
+      <PackageReference Include="MySqlConnector" Version="0.57.0-beta7" />
       <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+      <PackageReference Include="SQLProvider" Version="1.1.66" />
       <PackageReference Include="XPlot.GoogleCharts" Version="2.0.0" />
     </ItemGroup>
 
