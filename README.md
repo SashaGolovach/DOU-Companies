@@ -12,6 +12,8 @@ DOU Companies is an open source project for analysing market of IT in Ukraine. .
 
 ![Chart1](/docs/top5.png)
 
+![Chart1](/docs/correlation.png)
+
 > Subtitle or Short Description Goes Here
 
 > ideally one sentence
