@@ -33,6 +33,7 @@ namespace DOU_Companies_Web_Api
             services.AddDbContext<DouCompaniesDbContext>(options =>
                 options.UseMySQL(Configuration.GetConnectionString("DouCompaniesDatabase")));
             services.AddOData();
+            services.AddCors();
             services.AddMvc(options =>
                 {
                     options.EnableEndpointRouting = false;
@@ -54,17 +55,21 @@ namespace DOU_Companies_Web_Api
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors(
+                options => options.WithOrigins("http://localhost:4200").AllowAnyMethod()
+            );
             
             app.UseMvc(b =>
             {
-                b.MapODataServiceRoute("ODataRoute", "odata", GetEdmModel());
+                b.MapODataServiceRoute("ODataRoute", "api/odata", GetEdmModel());
             });
         }
         
         public static IEdmModel GetEdmModel()
         {
             var builder = new ODataConventionModelBuilder();
-            builder.EntitySet<CompanyModel>("comp")
+            builder.EntitySet<CompanyModel>("companies")
                 .EntityType
                 .Filter()
                 .Count()
@@ -74,7 +79,7 @@ namespace DOU_Companies_Web_Api
                 .Select();
 
 
-            builder.EntitySet<ReviewItemModel>("rev")
+            builder.EntitySet<ReviewItemModel>("reviews")
                 .EntityType
                 .Filter()
                 .Count()

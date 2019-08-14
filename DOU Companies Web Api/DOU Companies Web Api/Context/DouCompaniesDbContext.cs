@@ -26,7 +26,7 @@ namespace DOU_Companies_Web_Api.Models
             {
                 entity.HasKey(e => e.Name);
 
-                entity.ToTable("Companies", "dou_companies");
+                entity.ToTable("V_Companies", "dou_companies");
 
                 entity.HasIndex(e => e.Name)
                     .HasName("name")
@@ -40,6 +40,16 @@ namespace DOU_Companies_Web_Api.Models
 
                 entity.Property(e => e.Score)
                     .HasColumnName("score")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+                
+                entity.Property(e => e.ReviewsCount)
+                    .HasColumnName("reviewsCount")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+                
+                entity.Property(e => e.SentimentAnalysisScore)
+                    .HasColumnName("sentimentAnalysisScore")
                     .HasMaxLength(50)
                     .IsUnicode(false);
             });

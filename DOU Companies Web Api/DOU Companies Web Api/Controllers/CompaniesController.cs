@@ -5,7 +5,7 @@ using Microsoft.AspNet.OData.Routing;
 
 namespace DOU_Companies_Web_Api.Controllers
 {
-    [ODataRoutePrefix("comp")]
+    [ODataRoutePrefix("companies")]
     public class CompaniesController : ODataController
     {
         private DouCompaniesDbContext _context;

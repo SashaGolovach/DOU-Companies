@@ -5,7 +5,7 @@ using Microsoft.AspNet.OData.Routing;
 
 namespace DOU_Companies_Web_Api.Controllers
 {
-    [ODataRoutePrefix("rev")]
+    [ODataRoutePrefix("reviews")]
     public class ReviewsController : ODataController
     {
         private DouCompaniesDbContext _context;
@@ -17,9 +17,9 @@ namespace DOU_Companies_Web_Api.Controllers
 
         [ODataRoute]
         [EnableQuery]
-        public IQueryable<ReviewItemModel> Get(string companyName)
+        public IQueryable<ReviewItemModel> Get()
         {
-            return _context.Reviews.Where(item => item.CompanyName == companyName);
+            return _context.Reviews.AsQueryable();
         }
     }
 }
