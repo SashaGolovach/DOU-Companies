@@ -10,7 +10,7 @@ namespace DOU
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
-                .UseSqlite(@"Data Source=Database/dou-companies.db;");
+                .UseSqlite(@"Data Source=dou-companies.db;");
         }
 
         public virtual DbSet<CompanyModel> Companies { get; set; }

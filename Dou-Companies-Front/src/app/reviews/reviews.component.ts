@@ -16,6 +16,7 @@ export class ReviewsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   title = 'odata-data-source-demo';
+  baseUrl = 'http://dou-web-api.azurewebsites.net/';
 
   displayedColumns: string[] = ['CompanyName', 'Score', 'Text'];
 
@@ -25,7 +26,7 @@ export class ReviewsComponent implements OnInit {
 
   ngOnInit() {
     let companyName = this.route.snapshot.queryParamMap.get('companyName');
-    let resourcePath = `api/odata/reviews`;
+    let resourcePath = this.baseUrl + `api/odata/reviews`;
 
     this.dataSource = new ODataDataSource(this.httpClient, resourcePath);
     this.dataSource.sort = this.sort;
