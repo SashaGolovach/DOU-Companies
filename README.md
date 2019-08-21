@@ -1,6 +1,6 @@
 # DOU-Companies
 
-***INSERT GRAPHIC HERE (include hyperlink in image)***
+***https://dou-companies-front.herokuapp.com/***
 
 # Inctroduction
 
