@@ -16,7 +16,7 @@ export class ReviewsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   title = 'odata-data-source-demo';
-  baseUrl = 'http://dou-web-api.azurewebsites.net/';
+  baseUrl = 'https://dou-web-api.azurewebsites.net/';
 
   displayedColumns: string[] = ['CompanyName', 'Score', 'Text'];
 
