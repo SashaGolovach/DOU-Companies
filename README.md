@@ -34,10 +34,9 @@ _The score of text is placed in range (-1.0 | 1.0)_
 
 ---
 
-## Support
+## Contacts
 
 Reach out to me at one of the following places!
 
-- Website at <a href="http://fvcproductions.com" target="_blank">`fvcproductions.com`</a>
-- Twitter at <a href="http://twitter.com/fvcproductions" target="_blank">`@fvcproductions`</a>
-- Insert more social links here.
+- LinkedIn at <a href="https://www.linkedin.com/in/sasha-golovach-a56b5b164/" target="_blank">`@sasha-golovach`</a>
+- Email at <a href="mailto:sasha.golovach@icloud.com" target="_blank">`sasha.golovach@icloud.com`</a>
