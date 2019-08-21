@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DOU Companies Web Api", "DOU Companies Web Api\DOU Companies Web Api.csproj", "{FE78A9FF-8CEA-4A5D-8400-80623D685AF2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DOU-Companies-Web-Api", "DOU-Companies-Web-Api\DOU-Companies-Web-Api.csproj", "{FE78A9FF-8CEA-4A5D-8400-80623D685AF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
