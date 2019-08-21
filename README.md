@@ -29,8 +29,8 @@ _The score of text is placed in range (-1.0 | 1.0)_
 
 ## FAQ
 
-- **How do I do *specifically* so and so?**
-    - No problem! Just do this.
+- **What is the value of this service?**
+    - The main idea of it is to help you find out whether some company is good for you by analysing their reviews on DOU. Usually it takes a lot of time to read all information so this service lets you to look for important insights faster.
 
 ---
 
